@@ -1,33 +1,47 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <h1></h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://gitter.im/vuejs/vue" target="_blank">Gitter Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+    <h1>{{ title }}</h1>
+    <input type="text" name="" value="" v-model="location" placeholder="City?" />
+    <button type="button" name="button" @click="getWeather(location)" v-text="buttonText"></button>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+var darkSkyKey = "54f2199c7f2eeef83b7d85834c79a5c3";
+var googleMapsKey = "AIzaSyBCQvwyLahB8OTK-BZuAksotjpP1yQs8tc";
+
 export default {
-  name: 'app',
-  data () {
+  name: "app",
+  data() {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: "Welcome to Your Vue.js App",
+      title: "WEATHER",
+      buttonText: "Click for Weather",
+      location: ""
+    };
+  },
+  methods: {
+    getWeather(location) {
+      console.log(location);
+      location = "";
+      // this^ didn't work
+      axios
+        .get(
+          "https://maps.googleapis.com/maps/api/geocode/json?address=" +
+            location +
+            "&key=" +
+            googleMapsKey
+        )
+        .then(res => {
+          console.log(response);
+          const lat = response.lat;
+          const lng = response.lng;
+        });
     }
-  }
-}
+  },
+  mounted() {}
+};
 </script>
 
 <style>
